@@ -1,0 +1,85 @@
+/* Mapa de contexto para un sistema de comercio electrónico */
+ContextMap TiendaEnLineaMapaContexto {
+  type SYSTEM_LANDSCAPE
+  state TO_BE
+
+  contains GestionProductosContext
+  contains GestionPedidosContext
+  contains GestionClientesContext
+  contains ProcesoPagoContext
+  /* ... otros contextos limitados ... */
+}
+
+/* Definición de dominio principal */
+Domain ComercioElectronico {
+  domainVisionStatement "Dominio que encapsula toda la lógica y funcionalidades del sistema de comercio electrónico."
+
+  /* Subdominios */
+  Subdomain GestionProductos {
+    type CORE_DOMAIN
+    domainVisionStatement "Subdominio responsable de la gestión del catálogo de productos y el inventario."
+  }
+
+  Subdomain GestionPedidos {
+    type CORE_DOMAIN
+    domainVisionStatement "Subdominio encargado de la gestión de pedidos y el proceso de compra."
+  }
+
+  Subdomain GestionClientes {
+    type CORE_DOMAIN
+    domainVisionStatement "Subdominio dedicado a la gestión de la información de clientes."
+  }
+
+  Subdomain ProcesamientoPagos {
+    type SUPPORTING_DOMAIN
+    domainVisionStatement "Subdominio para la gestión de transacciones y procesos de pago."
+  }
+
+  /* ... otros subdominios según sea necesario ... */
+}
+
+/* Contexto Limitado: Gestión de Productos */
+BoundedContext GestionProductosContext implements GestionProductos {
+  type FEATURE
+  domainVisionStatement "Este contexto se encarga de la gestión de los productos, incluyendo el mantenimiento del catálogo de productos y la gestión del inventario."
+
+  Aggregate Catalogo {
+    Entity Producto {
+      aggregateRoot
+
+      String codigoProducto
+      String nombre
+      String descripcion
+      Double precio
+      int cantidadEnInventario
+
+    }
+    
+  }
+}
+
+/* Contexto Limitado: Gestión de Pedidos */
+BoundedContext GestionPedidosContext implements GestionPedidos {
+  type FEATURE
+  domainVisionStatement "Este contexto maneja todo el proceso de compra en línea, desde el carrito de compras hasta la confirmación y seguimiento de pedidos."
+
+  /* ... Definiciones de agregados, entidades y objetos de valor ... */
+}
+
+/* Contexto Limitado: Gestión de Clientes */
+BoundedContext GestionClientesContext implements GestionClientes {
+  type FEATURE
+  domainVisionStatement "Este contexto es responsable de la gestión integral de los clientes, incluyendo perfiles, historial de pedidos y gestión de direcciones."
+
+  /* ... Definiciones de agregados, entidades y objetos de valor ... */
+}
+
+/* Contexto Limitado: Proceso de Pago */
+BoundedContext ProcesoPagoContext implements ProcesamientoPagos {
+  type FEATURE
+  domainVisionStatement "Este contexto se ocupa de la integración de pasarelas de pago, asegurando la implementación de métodos de pago seguros."
+
+  /* ... Definiciones de agregados, entidades y objetos de valor ... */
+}
+
+/* ... Definiciones adicionales para otros contextos limitados ... */
